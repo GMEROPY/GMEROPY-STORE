@@ -1,0 +1,3909 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<style>
+@media (min-width: 769px) {
+  #pulsa-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+    gap: 0.75rem !important;
+    justify-items: center !important;
+    justify-content: start !important;
+    margin-left: -10px !important;
+    padding-left: 0 !important;
+  }
+
+  #pulsa-grid .game-item {
+    max-width: 120px !important;
+    width: 100% !important;
+    margin-bottom: 0.8rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  #pulsa-grid .game-card {
+    max-width: 120px !important;
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    background: rgba(0, 255, 247, 0.12) !important;
+    border-radius: 0.6rem !important;
+    box-shadow: 0 0 4px 1px #00fff7aa, 0 0 10px 2px #00fff766 !important;
+    border: 1px solid #00fff744 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+  }
+
+  #pulsa-grid .game-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  #pulsa-grid .game-name {
+    margin-top: 0.4rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    color: #00fff7 !important;
+    text-shadow: 0 0 4px #00fff788 !important;
+    width: 120px !important;
+  }
+}
+
+
+@media (min-width: 769px) {
+  #game-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+    gap: 0.75rem !important;
+    justify-items: center !important;
+    justify-content: start !important;
+    margin-left: -10px !important;
+    padding-left: 0 !important;
+  }
+
+  #game-grid .game-item {
+    max-width: 120px !important;
+    width: 100% !important;
+    margin-bottom: 0.8rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  #game-grid .game-card {
+    max-width: 120px !important;
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    background: rgba(0, 255, 247, 0.12) !important;
+    border-radius: 0.6rem !important;
+    box-shadow: 0 0 4px 1px #00fff7aa, 0 0 10px 2px #00fff766 !important;
+    border: 1px solid #00fff744 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+  }
+
+  #game-grid .game-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  #game-grid .game-name {
+    margin-top: 0.4rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    color: #00fff7 !important;
+    text-shadow: 0 0 4px #00fff788 !important;
+    width: 120px !important;
+  }
+}
+</style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>GMEROPY</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<style>
+    /* Reset & base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      font-family: 'Poppins', sans-serif;
+      color: #cfd8dc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    header {
+      background: rgba(20, 30, 40, 0.9);
+      backdrop-filter: saturate(180%) blur(10px);
+      padding: 1.25rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 0 6px 1px #00fff7cc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo {
+      font-weight: 800;
+      font-size: 2rem;
+      letter-spacing: 0.1em;
+      color: #00fff7;
+      font-family: 'Poppins', sans-serif;
+      text-shadow:
+        0 0 5px #00fff7aa,
+        0 0 15px #00fff7cc,
+        0 0 20px #00fff7ff;
+      user-select: none;
+    }
+    main {
+      flex: 1;
+      max-width: 1200px;
+      margin: 1.5rem auto 3rem;
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+   .slider {
+  position: relative;
+  margin-bottom: 0.8rem;
+  overflow: hidden;
+  border-radius: 1rem;
+  width: 100%;
+  box-shadow:
+    0 0 12px 2px #00fff7aa,
+    0 0 24px 4px #00fff778;
+}
+
+.slider-track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.slide {
+  min-width: 100%;
+  user-select: none;
+  position: relative;
+  color: #fff;
+  font-weight: 700;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 1rem;
+  display: block;
+}
+
+
+
+    #slider-section[hidden] .slider-arrow {
+      display: none !important;
+    }
+    .game-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      user-select: none;
+      margin-bottom: 1.25rem;
+      width: 100%;
+    }
+    .game-card {
+      background: rgba(0, 255, 247, 0.12);
+      border-radius: 0.75rem;
+      box-shadow:
+        0 0 8px 1px #00fff7aa,
+        0 0 20px 3px #00fff766;
+      cursor: pointer;
+      width: 100%;
+      max-width: 210px;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border: 1.5px solid transparent;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .game-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      user-select: none;
+    }
+    .game-card:focus,
+    .game-card:hover {
+      outline: none;
+      transform: translateY(-6px);
+      box-shadow:
+        0 0 16px 3px #00fff7ff,
+        0 0 40px 6px #00fff7ee;
+      border-color: #00fff7ff;
+    }
+    .game-name {
+      margin-top: 0.75rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #00fff7;
+      text-shadow: 0 0 5px #00fff7bb;
+      cursor: pointer;
+      user-select: text;
+      text-align: center;
+      width: 210px;
+    }
+    .game-name:focus,
+    .game-name:hover {
+      text-decoration: underline;
+      outline: none;
+    }
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(210px,1fr));
+      gap: 2rem 1.5rem;
+      justify-items: center;
+    }
+    .product-section {
+      background: rgba(10, 35, 45, 0.85);
+      border-radius: 1rem;
+      box-shadow:
+        0 0 24px 3px #00fff7bb;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      color: #a0ccd8;
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .product-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .product-game-image {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 1rem;
+      box-shadow: 0 0 12px 1px #00fff7bb;
+      flex-shrink: 0;
+      user-select: none;
+    }
+    .product-game-name {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #00fff7;
+      text-shadow:
+        0 0 10px #00fff7cc;
+      user-select: text;
+      margin: 0;
+      text-align: center;
+      width: 100%;
+    }
+    .input-user-id {
+      width: 280px;
+      max-width: 100%;
+      padding: 0.7rem 1rem;
+      border-radius: 0.8rem;
+      border: 2px solid #00fff7aa;
+      background: #123343;
+      color: #dcf6f9;
+      font-size: 1rem;
+      font-weight: 500;
+      box-shadow: 0 0 6px #00fff7bb;
+      transition: border-color 0.3s ease;
+      user-select: text;
+      margin-top: 0;
+    }
+    .input-user-id:focus {
+      outline: none;
+      border-color: #00fff7ff;
+      box-shadow: 0 0 14px #00fff7ff;
+      background: #0a2633;
+    }
+    .confirmation-message {
+      color: #00fff7;
+      font-weight: 700;
+      font-size: 1.1rem;
+      user-select: none;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+    .product-cards {
+      display: grid;
+      gap: 1.8rem;
+      grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+    }
+    .product-card {
+      background: rgba(0,255,247,0.12);
+      border-radius: 1rem;
+      position: relative;
+      padding-top: 180px;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      border: 2px solid transparent;
+      box-shadow:
+        0 0 10px 1px #00fff7a0;
+      user-select: none;
+      overflow: hidden;
+    }
+    .product-card:hover,
+    .product-card:focus-visible {
+      transform: translateY(-6px);
+      box-shadow:
+        0 0 28px 4px #00fff7ff;
+      border-color: #00fff7ff;
+      outline: none;
+    }
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+      transition: transform 0.3s ease;
+    }
+    .product-card:hover img,
+    .product-card:focus-visible img {
+      transform: scale(1.05);
+    }
+    .product-info {
+      padding: 12px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      bottom: 0;
+      background: rgba(0,0,0,0.25);
+      border-radius: 0 0 1rem 1rem;
+      color: #00fff7;
+      font-weight: 700;
+      font-size: 1.25rem;
+      text-shadow: 0 0 10px #00fff7bb;
+    }
+    @media (max-width: 640px) {
+      main {
+        width: 95%;
+      }
+      .slide-text, .game-name {
+        max-width: 100%;
+      }
+      .game-card {
+        max-width: 100%;
+        aspect-ratio: 1 / 1;
+      }
+      .product-game-image {
+        width: 100px;
+        height: 100px;
+      }
+      .product-cards {
+        grid-template-columns: 1fr;
+      }
+      .product-section {
+        padding: 1.5rem 1rem;
+      }
+      .input-user-id {
+        width: 100%;
+        margin-top: 0;
+      }
+    }
+  
+
+
+
+
+
+
+/* Responsive Navbar - Idhdu Style */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  width: 100%;
+  position: relative;
+  z-index: 200;
+}
+
+.logo {
+  font-size: 1.5rem;
+  color: #00fff7;
+  font-weight: bold;
+  text-shadow: 0 0 6px #00fff7aa;
+  letter-spacing: 2px;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  color: #00fff7;
+  cursor: pointer;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+nav a {
+  font-weight: 600;
+  color: #cfd8dc;
+  text-shadow: 0 0 6px #00fff7bb;
+  text-decoration: none;
+}
+
+@media (max-width: 640px) {
+  nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: rgba(10, 25, 30, 0.95);
+    padding: 1rem 0;
+    border-top: 1px solid #00fff733;
+    z-index: 150;
+  }
+
+  nav.show {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  nav a {
+    padding: 0.75rem 0;
+    text-align: center;
+    border-bottom: 1px solid #00fff733;
+  }
+
+  nav a:last-child {
+    border-bottom: none;
+  }
+}
+
+
+  nav.show {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  nav a {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #00fff733;
+  }
+
+  nav a:last-child {
+    border-bottom: none;
+  }
+}
+
+
+  
+nav {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+
+  nav.show {
+    display: flex;
+  }
+
+  nav a {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #00fff733;
+  }
+
+  nav a:last-child {
+    border-bottom: none;
+  }
+}
+
+
+
+@media (max-width: 640px) {
+  nav {
+    align-items: center;
+  }
+  nav a {
+    text-align: center;
+  }
+}
+
+
+
+/* Card Game Grid Layout */
+
+
+@media (max-width: 768px) {
+  
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 480px) {
+  
+
+  .game-item {
+    margin-bottom: 1rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.45rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.8rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.4rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.6rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.4rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.5rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.35rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.4rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.3rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.3rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.2rem;
+    text-align: center;
+  }
+}
+
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.15rem;
+    text-align: center;
+  }
+}
+
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    text-align: center;
+  }
+}
+
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
+    text-align: center;
+  }
+}
+
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+}
+
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+}
+
+
+
+.slider-track {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.slider-track img {
+  display: none;
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+}
+.slider-track img.active {
+  display: block;
+}
+
+
+/* Tambahan fix: sembunyikan hamburger menu di desktop */
+.menu-toggle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: rgba(10, 25, 30, 0.95);
+    padding: 1rem 0;
+    border-top: 1px solid #00fff733;
+    z-index: 150;
+  }
+
+  nav.show {
+    display: flex;
+  }
+
+  nav a {
+    padding: 0.75rem 0;
+    text-align: center;
+    border-bottom: 1px solid #00fff733;
+  }
+
+  nav a:last-child {
+    border-bottom: none;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .game-card {
+    max-width: 100px;
+    aspect-ratio: 1 / 1;
+  }
+
+  .game-name {
+    width: 100px;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+  }
+}
+
+
+@media (min-width: 481px) {
+  
+}
+
+
+
+
+
+
+
+@media (max-width: 480px) {
+  
+
+  .game-item {
+    margin-bottom: 1rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.45rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.8rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.4rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.6rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.4rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.5rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.35rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.4rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.3rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.3rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.2rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.1rem;
+    text-align: center;
+  }
+}
+
+
+@media (max-width: 768px) {
+  #game-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.3rem !important;
+    padding: 1.2rem !important;
+    width: 100% !important;
+  }
+
+  .game-item {
+    margin-bottom: 1rem !important;
+    width: 100% !important;
+  }
+
+  .game-card {
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100% !important;
+    font-size: 0.75rem !important;
+    margin-top: 0.45rem !important;
+    text-align: center !important;
+  }
+}
+
+
+body.mobile #game-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 1.3rem !important;
+  padding: 1.2rem !important;
+}
+
+body.mobile .game-item {
+  margin-bottom: 1rem !important;
+  width: 100% !important;
+}
+
+body.mobile .game-card {
+  width: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+  margin: 0 !important;
+}
+
+body.mobile .game-name {
+  width: 100% !important;
+  font-size: 0.75rem !important;
+  margin-top: 0.45rem !important;
+  text-align: center !important;
+}
+
+
+@media (min-width: 769px) {
+  #voucher-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+    gap: 0.75rem !important;
+    justify-items: center !important;
+  }
+
+  #voucher-grid .game-item {
+    max-width: 120px !important;
+    width: 100% !important;
+    margin-bottom: 0.8rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  #voucher-grid .game-card {
+    max-width: 120px !important;
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    background: rgba(0, 255, 247, 0.12) !important;
+    border-radius: 0.6rem !important;
+    box-shadow: 0 0 4px 1px #00fff7aa, 0 0 10px 2px #00fff766 !important;
+    overflow: hidden !important;
+    border: 1px solid #00fff744 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    cursor: pointer !important;
+  }
+
+  #voucher-grid .game-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  #voucher-grid .game-name {
+    margin-top: 0.4rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    color: #00fff7 !important;
+    text-shadow: 0 0 4px #00fff788 !important;
+    width: 120px !important;
+  }
+}
+
+
+@media (min-width: 769px) {
+  #voucher-grid {
+    justify-content: start !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+}
+
+
+@media (min-width: 769px) {
+  #voucher-grid {
+    justify-content: start !important;
+    margin-left: -10px !important;
+    padding-left: 0 !important;
+  }
+}
+
+
+@media (min-width: 769px) {
+  #voucher-grid {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .tab-content > div:nth-child(2) {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
+
+@media (min-width: 769px) {
+  #game-grid {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .tab-content > div:nth-child(1) {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
+
+@media (min-width: 769px) {
+  #game-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+    gap: 0.75rem !important;
+    justify-items: center !important;
+  }
+
+  #game-grid .game-item {
+    max-width: 120px !important;
+    width: 100% !important;
+    margin-bottom: 0.8rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  #game-grid .game-card {
+    max-width: 120px !important;
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 0.6rem !important;
+    box-shadow: 0 0 4px 1px #00fff7aa, 0 0 10px 2px #00fff766 !important;
+    background: rgba(0, 255, 247, 0.12) !important;
+    border: 1px solid #00fff744 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    cursor: pointer !important;
+  }
+
+  #game-grid .game-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  #game-grid .game-name {
+    margin-top: 0.4rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    color: #00fff7 !important;
+    text-shadow: 0 0 4px #00fff788 !important;
+    width: 120px !important;
+  }
+}
+
+
+@media (min-width: 769px) {
+  #voucher-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+    gap: 0.75rem !important;
+    justify-items: center !important;
+  }
+
+  #voucher-grid .game-item {
+    max-width: 120px !important;
+    width: 100% !important;
+    margin-bottom: 0.8rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  #voucher-grid .game-card {
+    max-width: 120px !important;
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 0.6rem !important;
+    box-shadow: 0 0 4px 1px #00fff7aa, 0 0 10px 2px #00fff766 !important;
+    background: rgba(0, 255, 247, 0.12) !important;
+    border: 1px solid #00fff744 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    cursor: pointer !important;
+  }
+
+  #voucher-grid .game-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  #voucher-grid .game-name {
+    margin-top: 0.4rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    color: #00fff7 !important;
+    text-shadow: 0 0 4px #00fff788 !important;
+    width: 120px !important;
+  }
+}
+
+
+@media (min-width: 769px) {
+  #game-grid {
+    justify-content: start !important;
+    margin-left: -10px !important;
+    padding-left: 0 !important;
+  }
+}
+
+
+.pulsa-grid .game-item {
+  width: 150px;
+  max-width: 150px;
+}
+.pulsa-grid .game-card {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+.pulsa-grid .game-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pulsa-grid .game-name {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.pulsa-grid .game-item {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+.pulsa-grid .game-card {
+  border-radius: 10px;
+  background: #00fff7;
+  padding: 1rem;
+}
+
+.pulsa-grid .game-item {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+.pulsa-grid .game-card {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: #00fff7;
+  border-radius: 10px;
+}
+.pulsa-grid .game-card img {
+  display: none; /* disable gambar jika tidak digunakan */
+}
+.pulsa-grid .game-name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #00fff7;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.pulsa-grid .game-card {
+  width: 150px;
+  height: auto;
+  padding: 1rem;
+  border-radius: 10px;
+  background: #00fff7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pulsa-grid .game-name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #00fff7;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+</style>
+<style>
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none !important;
+  }
+}
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block !important;
+  }
+}
+
+@media (min-width: 481px) {
+  
+}
+
+
+
+
+
+
+
+@media (max-width: 480px) {
+  
+
+  .game-item {
+    margin-bottom: 1rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.45rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.8rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.4rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.6rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.4rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.5rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.35rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.4rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.3rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.3rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.2rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.1rem;
+    text-align: center;
+  }
+}
+
+
+@media (max-width: 768px) {
+  #game-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.3rem !important;
+    padding: 1.2rem !important;
+    width: 100% !important;
+  }
+
+  .game-item {
+    margin-bottom: 1rem !important;
+    width: 100% !important;
+  }
+
+  .game-card {
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100% !important;
+    font-size: 0.75rem !important;
+    margin-top: 0.45rem !important;
+    text-align: center !important;
+  }
+}
+
+
+body.mobile #game-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 1.3rem !important;
+  padding: 1.2rem !important;
+}
+
+body.mobile .game-item {
+  margin-bottom: 1rem !important;
+  width: 100% !important;
+}
+
+body.mobile .game-card {
+  width: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+  margin: 0 !important;
+}
+
+body.mobile .game-name {
+  width: 100% !important;
+  font-size: 0.75rem !important;
+  margin-top: 0.45rem !important;
+  text-align: center !important;
+}
+
+.category-menu {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 2.5rem auto;
+  padding: 1.2rem 1rem;
+  
+  border-radius: 1.25rem;
+  
+  max-width: 900px;
+  margin-bottom: 0.8rem;
+}
+
+.category-item {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #00fff7;
+  background-color: rgba(0, 255, 247, 0.1);
+  padding: 0.65rem 1.5rem;
+  border-radius: 0.75rem;
+  
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.category-item:hover {
+  transform: translateY(-5px);
+  background-color: rgba(0, 255, 247, 0.2);
+  box-shadow: 0 0 15px #00fff7cc;
+}
+
+
+  100% { transform: scale(1); }
+}
+  100% { transform: scale(1); }
+}
+
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+@media (min-width: 1024px) {
+  .category-menu {
+    justify-content: flex-start !important;
+    margin-bottom: 0.8rem;
+}
+}
+
+/* === Enforce Category Menu to Left === */
+.category-menu {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  padding-left: 1.5rem !important;
+  justify-content: flex-start !important;
+  margin-bottom: 0.8rem;
+}
+
+
+/* === FORCE CATEGORY MENU FULL WIDTH + LEFT ALIGNED === */
+.category-menu {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  justify-content: flex-start !important;
+  margin-bottom: 0.8rem;
+}
+
+
+/* === Underline for Each Category Item === */
+padding-bottom: 0.4rem;
+}
+
+
+/* === Separator Line Below Menu Section === */
+#category-menu::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #00fff7;
+  margin-top: 0.5rem;
+}
+
+/* === MENU HORIZONTAL LINE BELOW MENU === */
+.menu-separator {
+  width: 100%;
+  height: 2px;
+  background-color: #00fff7;
+  margin-top: 0 !important;
+}
+
+
+/* === FULL FORCE REMOVE GAP BELOW MENU === */
+#category-menu {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.menu-separator {
+  width: 100%;
+  height: 2px;
+  background-color: #00fff7;
+  margin-top: 0 !important;
+}
+
+#category-menu + .menu-separator {
+  width: 100%;
+  height: 2px;
+  background-color: #00fff7;
+  margin-top: 0 !important;
+}
+
+
+/* === Embedded Menu Separator for Zero Gap === */
+.menu-separator {
+  width: 100%;
+  height: 2px;
+  background-color: #00fff7;
+  margin-top: 0 !important;
+}
+
+
+/* Bersihkan semua transisi dan pastikan garis horizontal menempel rapat */
+.category-item {
+  transition: none !important;
+}
+
+.menu-separator {
+  width: 100%;
+  height: 2px;
+  background-color: #00fff7;
+  margin-top: 0 !important;
+}
+
+
+@media (max-width: 480px) {
+  .category-menu {
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    padding: 0.5rem 0.5rem !important;
+    gap: 0.5rem !important;
+    margin-bottom: 0.8rem;
+}
+
+  .category-item {
+    font-size: 0.85rem !important;
+    padding: 0.4rem 0.6rem !important;
+    flex: 1 1 0 !important;
+    text-align: center;
+  }
+}
+
+
+/* === Remove spacing between menu and horizontal line === */
+#category-menu {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.menu-separator {
+  margin-top: 0 !important;
+}
+
+
+/* Pengetatan penuh jarak antara menu dan garis */
+
+
+.menu-separator {
+  margin-top: 0.2rem !important;
+}
+
+
+
+@media (max-width: 768px) {
+  #voucher-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.3rem !important;
+    padding: 1.2rem !important;
+    width: 100% !important;
+  }
+
+  #voucher-grid .game-item {
+    margin-bottom: 1rem !important;
+    width: 100% !important;
+  }
+
+  #voucher-grid .game-card {
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    margin: 0 !important;
+  }
+
+  #voucher-grid .game-name {
+    width: 100% !important;
+    font-size: 0.75rem !important;
+    margin-top: 0.45rem !important;
+    text-align: center !important;
+  }
+}
+
+@media (min-width: 769px) {
+  #voucher-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+    gap: 0.75rem !important;
+    justify-items: center !important;
+  }
+
+  #voucher-grid .game-item {
+    max-width: 120px !important;
+    width: 100% !important;
+    margin-bottom: 0.8rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  #voucher-grid .game-card {
+    max-width: 120px !important;
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    background: rgba(0, 255, 247, 0.12) !important;
+    border-radius: 0.6rem !important;
+    box-shadow: 0 0 4px 1px #00fff7aa, 0 0 10px 2px #00fff766 !important;
+    overflow: hidden !important;
+    border: 1px solid #00fff744 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    cursor: pointer !important;
+  }
+
+  #voucher-grid .game-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  #voucher-grid .game-name {
+    margin-top: 0.4rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    color: #00fff7 !important;
+    text-shadow: 0 0 4px #00fff788 !important;
+    width: 120px !important;
+  }
+}
+
+@media (min-width: 769px) {
+  #game-grid {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .tab-content > div:nth-child(1) {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
+
+@media (min-width: 769px) {
+  #game-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+    gap: 0.75rem !important;
+    justify-items: center !important;
+  }
+
+  #game-grid .game-item {
+    max-width: 120px !important;
+    width: 100% !important;
+    margin-bottom: 0.8rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  #game-grid .game-card {
+    max-width: 120px !important;
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 0.6rem !important;
+    box-shadow: 0 0 4px 1px #00fff7aa, 0 0 10px 2px #00fff766 !important;
+    background: rgba(0, 255, 247, 0.12) !important;
+    border: 1px solid #00fff744 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    cursor: pointer !important;
+  }
+
+  #game-grid .game-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  #game-grid .game-name {
+    margin-top: 0.4rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    color: #00fff7 !important;
+    text-shadow: 0 0 4px #00fff788 !important;
+    width: 120px !important;
+  }
+}
+
+@media (min-width: 769px) {
+  #game-grid {
+    justify-content: start !important;
+    margin-left: -10px !important;
+    padding-left: 0 !important;
+  }
+}
+
+</style>
+<style>
+.pulsa-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+.pulsa-grid .game-item {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 150px;
+  text-align: center;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pulsa-grid .game-card {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.pulsa-grid .game-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+</style><style>
+@media (max-width: 768px) {
+  .pulsa-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.3rem !important;
+    padding: 1.2rem !important;
+    width: 100% !important;
+    justify-items: center !important;
+  }
+
+  .pulsa-grid .game-item {
+    width: 140px !important;
+    max-width: 140px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin-bottom: 0.8rem !important;
+  }
+
+  .pulsa-grid .game-card {
+    background: rgba(0, 255, 247, 0.12) !important;
+    border-radius: 0.6rem !important;
+    box-shadow: 0 0 4px 1px #00fff7aa, 0 0 10px 2px #00fff766 !important;
+    border: 1px solid #00fff744 !important;
+    width: 140px !important;
+    height: 140px !important;
+    aspect-ratio: 1 / 1 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+  }
+
+  .pulsa-grid .game-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  .pulsa-grid .game-name {
+    margin-top: 0.4rem !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    color: #00fff7 !important;
+    text-align: center !important;
+    text-shadow: 0 0 4px #00fff788 !important;
+    width: 140px !important;
+  }
+}
+</style>
+<style>
+.input-pair input {
+  flex: 1;
+  min-width: 0;
+}
+</style>
+
+<style>
+@media (max-width: 768px) {
+  .product-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .product-card {
+    background: #00fff7aa;
+    border-radius: 0.8rem;
+    box-shadow: 0 0 8px #00fff9;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+
+  .product-info span {
+    white-space: nowrap;
+  }
+}
+</style>
+</head>
+<body>
+<header>
+<div class="logo-container" style="display: flex; align-items: center; gap: 16px;">
+<img alt="Logo GMEROPY" src="https://i.imgur.com/0fkh4PO.png" style="height: 56px; width: 56px; object-fit: contain; border-radius: 50%; margin-right: 8px;"/>
+<h1 class="logo">GMEROPY</h1>
+</div>
+<div class="menu-toggle" onclick="toggleMenu()">☰</div>
+<nav class="" id="nav-links">
+  <a href="javascript:void(0)" onclick="showHome()">Beranda</a>
+
+<a href="javascript:void(0)" onclick="showTopup()">Top Up</a>
+<a href="#login">Login</a>
+</nav>
+</header>
+<main>
+<section aria-label="Promotional Slider" id="slider-section">
+<div aria-atomic="true" aria-live="polite" aria-roledescription="carousel" class="slider" role="region">
+<div class="slider-track" id="slider-track">
+<img alt="Slide 1" class="slide active" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQB-M8kb5727agXM-USS2VAcZSVQJB-iJ_ISZrwMa3zgXHHvRzA8LOO_xov&s=10"/>
+<img alt="Slide 2" class="slide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNvZd6_kLlld75134gDD7-9rne8lQgw8IBwFpd8Lg04RvuL0D3a_Lu-rs&s=10"/>
+<img alt="Slide 3" class="slide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj6h_baDBpcJ3zZcOPB9QPc9WvfudbnbmxkqnO2cAxR7_XD32RGxGSPAI&s=10"/>
+<img alt="Slide 4" class="slide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxfvi4sX5ikztGcsjnIeB_uPco2I5H1a8juCKqdlsc6eby6KQfGa33OHTi&s=10"/>
+<img alt="Slide 5" class="slide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNlLVR8dBd9Yu69sN9qRrRf4siV6FK8aOG0ycfW43UJ3c5Zq7wnNUef9s&s=10"/>
+<img alt="Slide 6" class="slide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV3a5zegeOeHJ3QHvbG2brPIqeeY-tv1NquUg9KbmqhAt4D5__qaUwBHg&s=10"/>
+<img alt="Slide 7" class="slide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6DufEClclsAKIx-CfUn6czUVle1undIuoASAC7CzY1GA8HM0Q0glZl8s&s=10"/>
+<img alt="Slide 8" class="slide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlvG-B3wAkZv1KxtmlXykpC5eK_stdwt2RnuSjBATeYFCY85YKx_YDsEc&s=10"/>
+<img alt="Slide 8" class="slide" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTthMDqiaTzZGA_clYjxxF2_RbtwHOeEBqYt-gOYoMUKkSlNvUCeE7x-GsE&s=10"/>
+<img alt="Slide 9" class="slide" src="https://digitalpress.fra1.cdn.digitaloceanspaces.com/isa6jfv/2024/11/honor-of-kings-x-jujutsu-kaisen-collab-banner.jpg"/>
+</div>
+</div>
+<section class="category-menu" id="category-menu">
+<div class="category-item" data-category="game">🎮 Game</div>
+<div class="category-item" data-category="pulsa">📱 Pulsa</div>
+</section>
+<div class="menu-separator"></div>
+</section>
+<section aria-label="Available Games" id="games-section">
+<div class="game-grid" id="game-grid" role="list">
+<!-- Game cards inserted dynamically -->
+</div>
+</section>
+<section hidden="True" id="pulsa-section"><div class="game-grid pulsa-grid" id="pulsa-grid" role="list"><div class="game-item" data-id="telkomsel"><div class="game-card"><img alt="Telkomsel" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5qH9Bu-2dpjQ2kbTg3JZoKEdJLmci9BGdig&amp;s"/></div><div class="game-name">Telkomsel</div></div><div class="game-item" data-id="indosat"><div class="game-card"><img alt="Indosat" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq88soqksg_xPikkbF3-WjshfDzXP0dvZILanATdlPdw&amp;s"/></div><div class="game-name">Indosat</div></div><div class="game-item" data-id="xl"><div class="game-card"><img alt="XL Axiata" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT4VL3sds3ZnjyquMXAYRwx2VtR7RfazY0q43CN_DDjA&amp;s"/></div><div class="game-name">XL</div></div><div class="game-item" data-id="tri"><div class="game-card"><img alt="Tri" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtvonxoRxDcMHj5DnEQ2zbrBhKsryYxkDDIUrwZ1KUng&amp;s"/></div><div class="game-name">Tri</div></div><div class="game-item" data-id="smartfren"><div class="game-card"><img alt="Smartfren" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSng7VkcJCo_ki4_UhNQGfKlamvY2xw9UUFWA&amp;s"/></div><div class="game-name">Smartfren</div></div><div class="game-item" data-id="axis"><div class="game-card"><img alt="Axis" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFKZF94w-IFamxCtgQito7Kx-UUU1F1O9e9nKmNDzUZA&amp;s"/></div><div class="game-name">Axis</div></div></div></section>
+<section hidden="True" id="pulsa-section"><div class="game-grid pulsa-grid" id="pulsa-grid" role="list"><div class="game-item" data-id="telkomsel"><div class="game-card"><img alt="Telkomsel" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5qH9Bu-2dpjQ2kbTg3JZoKEdJLmci9BGdig&amp;s"/></div><div class="game-name">Telkomsel</div></div><div class="game-item" data-id="indosat"><div class="game-card"><img alt="Indosat" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq88soqksg_xPikkbF3-WjshfDzXP0dvZILanATdlPdw&amp;s"/></div><div class="game-name">Indosat</div></div><div class="game-item" data-id="xl"><div class="game-card"><img alt="XL Axiata" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT4VL3sds3ZnjyquMXAYRwx2VtR7RfazY0q43CN_DDjA&amp;s"/></div><div class="game-name">XL</div></div><div class="game-item" data-id="tri"><div class="game-card"><img alt="Tri" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtvonxoRxDcMHj5DnEQ2zbrBhKsryYxkDDIUrwZ1KUng&amp;s"/></div><div class="game-name">Tri</div></div><div class="game-item" data-id="smartfren"><div class="game-card"><img alt="Smartfren" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSng7VkcJCo_ki4_UhNQGfKlamvY2xw9UUFWA&amp;s"/></div><div class="game-name">Smartfren</div></div><div class="game-item" data-id="axis"><div class="game-card"><img alt="Axis" src="https://placehold.co/210x210/00fff7/ffffff?text=Axis"/></div><div class="game-name">Axis</div></div></div></section>
+<section aria-label="Game Products" hidden="" id="products-section">
+<div aria-atomic="true" aria-live="polite" class="product-section" role="region">
+<div class="product-header">
+<img alt="" class="product-game-image" id="product-game-image" src=""/>
+<span class="product-game-name" id="product-game-name"></span>
+<div class="input-pair" style="display: flex; gap: 0.5rem;"><input aria-label="User ID input" autocomplete="off" class="input-user-id" id="user-id-input" placeholder="Your User ID here" type="text"/></div>
+</div>
+<div class="confirmation-message">Silahkan pilih produk di bawah ini:</div>
+<div class="product-cards" id="product-cards" role="list" tabindex="0">
+<!-- Product cards inserted dynamically -->
+</div>
+</div>
+</section>
+</main>
+<script>
+  (function(){
+    'use strict';
+    const whatsappNumber = '6289612954087';
+
+    const games = [
+      { id: 'mobile-legends', name: 'Mobile Legends', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlfj2kQHcNX4F94E_aNQD_ZTWujNWfoqGA0A&s', products: [{ id: 'ml-1', name: '12 Diamonds', desc: '12 Diamonds ', price: 5000 }, { id: 'ml-2', name: '14 Diamonds', desc: '14 Diamonds', price: 6000 }, { id: 'ml-3', name: '18 Diamonds', desc: '18 Diamonds', price: 7000 }, { id: 'ml-4', name: '19 Diamonds', desc: '19 Diamonds', price: 8000 }, { id: 'ml-5', name: '28 Diamonds', desc: '28 Diamonds', price: 10000 }, { id: 'ml-6', name: '36 Diamonds', desc: '36 Diamonds', price: 12000 }, { id: 'ml-7', name: '44 Diamonds', desc: '44 Diamonds', price: 14000 }, { id: 'ml-8', name: '46 Diamonds', desc: '46 Diamonds', price: 15000 }, { id: 'ml-9', name: '71 Diamonds', desc: '71 Diamonds', price: 22000 }, { id: 'ml-10', name: '74 Diamonds', desc: '74 Diamonds', price: 23000 }, { id: 'ml-11', name: '85 Diamonds', desc: '85 Diamonds', price: 25000 }, { id: 'ml-12', name: '88 Diamonds', desc: '88 Diamonds', price: 26000 }, { id: 'ml-13', name: '113 Diamonds', desc: '113 Diamonds', price: 33000 }, { id: 'ml-14', name: '128 Diamonds', desc: '128 Diamonds', price: 38000 }, { id: 'ml-15', name: '148 Diamonds', desc: '148 Diamonds', price: 43000 }, { id: 'ml-16', name: '170 Diamonds', desc: '170 Diamonds', price: 49000 }, { id: 'ml-17', name: '176 Diamonds', desc: '176 Diamonds', price: 52000 }, { id: 'ml-18', name: '184 Diamonds', desc: '184 Diamonds', price: 54000 }, { id: 'ml-19', name: '222 Diamonds', desc: '222 Diamonds', price: 64000 }, { id: 'ml-20', name: '240 Diamonds', desc: '240 Diamonds', price: 68000 }, { id: 'ml-21', name: '258 Diamonds', desc: '258 Diamonds', price: 74000 }, { id: 'ml-22', name: '284 Diamonds', desc: '284 Diamonds', price: 80000 }, { id: 'ml-23', name: '305 Diamonds', desc: '305 Diamonds', price: 88000 }, { id: 'ml-24', name: '333 Diamonds', desc: '333 Diamonds', price: 96000 }, { id: 'ml-25', name: '346 Diamonds', desc: '346 Diamonds', price: 99000 }, { id: 'ml-26', name: '356 Diamonds', desc: '356 Diamonds', price: 105000 }] },
+      { id: 'free-fire', name: 'Free Fire', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrZT9MqzcBU22Sj8bnkanY6X6OAdTN2s1Hg64jGfc39Rf_bo2q7Ls5rg5i&s=10', products: [{ id: 'ff-1', name: 'Diamonds 70', desc: 'Pack of 70 Diamonds', price: 15000 }, { id: 'ff-2', name: 'Diamonds 175', desc: 'Pack of 175 Diamonds with bonus', price: 35000 }, { id: 'ff-3', name: 'Diamonds 355', desc: 'Big pack with extra bonus', price: 68000 }] },
+      { id: 'Free Fire Max', name: 'Free Fire Max', image: 'https://play-lh.googleusercontent.com/Odw8BGugaJLdbaSbCeZWbTE3Qz1wTiQ0Tsn9nzpoQdnkzWb-gaI58zzTmYDvGpdYKg', products: [{ id: 'Free fire Max-1', name: '5 Diamonds ', desc: '5 Diamonds', price: 1500 }, { id: 'Free fire Max-2', name: '20 Diamonds', desc: '20 Diamonds', price: 4000 }, { id: 'Free fire Max-3', name: '30 Diamonds', desc: '30 Diamonds', price: 7000 }, { id: 'Free Fire Max-3', name: '50 Diamonds', desc: '50 Diamonds', price: 9000 },
+      { id: 'Free Fire Max-4', name: '55 Diamonds', desc: '55 Diamonds', price: 10000 },{ id: 'Free Fire Max-5', name: '75 Diamonds', desc: '75 Diamonds', price: 12000 }, { id: 'Free Fire Max-6', name: '80 Diamonds', desc: '80 Diamonds', price: 13000 }, { id: 'Free Fire Max-7', name: '90 Diamonds', desc: '90 Diamonds', price: 14000 },  { id: 'Free Fire Max-8', name: '120 Diamonds', desc: '120 Diamonds', price: 18000 },  { id: 'Free Fire Max-9', name: '130 Diamonds', desc: '130 Diamonds', price: 20000 },  { id: 'Free Fire Max-10', name: '145 Diamonds', desc: '145 Diamonds', price: 23000 },   { id: 'Free Fire Max-11', name: '170 Diamonds', desc: '170 Diamonds', price: 25000 },   { id: 'Free Fire Max-12', name: '180 Diamonds', desc: '180 Diamonds', price: 27000 }, { id: 'Free Fire Max-13', name: '250 Diamonds', desc: '250 Diamonds', price: 36000 }, { id: 'Free Fire Max-14', name: '260 Diamonds', desc: '260 Diamonds', price: 38000 }, { id: 'Free Fire Max-15', name: '355 Diamonds', desc: '355 Diamonds', price: 49000 }, { id: 'Free Fire Max-16', name: '360 Diamonds', desc: '360 Diamonds', price: 50000 }, { id: 'Free Fire Max-17', name: '375 Diamonds', desc: '375 Diamonds', price: 52000 }, { id: 'Free Fire Max-18', name: '400 Diamonds', desc: '400 Diamonds', price: 56000 }, { id: 'Free Fire Max-19', name: '405 Diamonds', desc: '405 Diamonds', price: 57000 }, { id: 'Free Fire Max-20', name: '425 Diamonds', desc: '425 Diamonds', price: 57000 }, { id: 'Free Fire Max-21', name: '475 Diamonds', desc: '475 Diamonds', price: 59000 }, { id: 'Free Fire Max-22', name: '510 Diamonds', desc: '510 Diamonds', price: 69000 },{ id: 'Free Fire Max-23', name: '515 Diamonds', desc: '515 Diamonds', price: 71000 }, { id: 'Free Fire Max-24', name: '545 Diamonds', desc: '545 Diamonds', price: 73000 }, { id: 'Free Fire Max-25', name: '565 Diamonds', desc: '565 Diamonds', price: 75000 }, { id: 'Free Fire Max-26', name: '600 Diamonds', desc: '600 Diamonds', price: 80000 }, { id: 'Free Fire Max-27', name: '635 Diamonds', desc: '635 Diamonds', price: 84000 }, { id: 'Free Fire Max-28', name: '645 Diamonds', desc: '645 Diamonds', price: 86000 }, { id: 'Free Fire Max-29', name: '655 Diamonds', desc: '655 Diamonds', price: 88000 }, { id: 'Free Fire Max-30', name: '725 Diamonds', desc: '725 Diamonds', price: 95000 }, { id: 'Free Fire Max-31', name: '740 Diamonds', desc: '740 Diamonds', price: 97000 }, { id: 'Free Fire Max-32', name: '770 Diamonds', desc: '770 Diamonds', price: 100000 }, { id: 'Free Fire Max-33', name: '790 Diamonds', desc: '790 Diamonds', price: 103000 },] },
+      { id: 'valorant', name: 'Valorant', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHzMyggF2gBr0_nbFWvVH-IqqR4X48bq1XSsRjDeAwbw&s', products: [{ id: 'val-1', name: 'Valorant Points 500', desc: 'Pack of 500 Points', price: 70000 }, { id: 'val-2', name: 'Valorant Points 1000', desc: 'Pack of 1000 Points with bonus', price: 130000 }, { id: 'val-3', name: 'Valorant Points 2000', desc: 'Mega pack with big bonus', price: 250000 }] },
+      { id: 'genshin-impact', name: 'Genshin Impact', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDlz-K_9PdpO7KyWaQ1sA8sbMS-uWKTaPxndDtUPpAWw&s', products: [{ id: 'genshin-1', name: 'Primogems 60', desc: '60 Primogems', price: 15000 }, { id: 'genshin-2', name: 'Primogems 150', desc: 'Pack of 150 Primogems', price: 35000 }, { id: 'genshin-3', name: 'Primogems 300', desc: 'Big pack with bonus', price: 68000 }] },
+    { id: 'ZZZ', name: 'Zenless Zone Zero', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEf1KRiTFz4YBroO5A5bJl9N19a3AAyA8PGjFq8z7GyA&s',
+  products:[
+    { id: 'zzz-1', name: '60 Polychrome', desc: 'Pack of 60 Polychrome', price: 15000 },
+    { id: 'zzz-2', name: '300 Polychrome', desc: 'Pack of 300 Polychrome', price: 70000 },] },
+       { id: 'PUBG Mobile', name: 'PUBG Mobile', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqdohkRAK7ISgwIjP6y4jIDy-PLB3HHtr4wYpJT6_jwQ&s',
+  products:[
+    { id: 'pubg-1', name: 'UC 60', desc: '60 Unknown Cash (UC)', price: 15000 },
+    { id: 'pubg-2', name: 'UC 325', desc: '325 UC + Bonus', price: 70000 },] },
+    { id: 'Call Of Duty Mobile', name: 'Call Of Duty Mobile', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPwcTBFAoC1RX0bPgsJRJm_MxdDhLQvb8jPQMCD5YO2g&s',
+  products: [{ id: 'CM-1', name: 'Diamonds 50', desc: 'Pack of 50 Diamonds', price: 10000 }, { id: 'CM-2', name: 'Diamonds 150', desc: 'Pack of 150 Diamonds with bonus', price: 28000 }, { id: 'CM-3', name: 'Diamonds 300', desc: 'Large pack with extra bonus', price: 52000 }]
+},    
+  { id: 'Honkai: Star Rail', name: 'Honkai: Star Rail', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaRG3oFsfSAkeQzrNJNE09oav2rracH623X6vurVu-Dg&s',
+  products:[
+    { id: 'hsr-1', name: '60 Stellar Jade', desc: 'Pack of 60 Stellar Jade', price: 15000 },
+    { id: 'hsr-2', name: '300 Stellar Jade', desc: 'Large Pack', price: 70000 },] },
+    { id: 'Honkai Impact 3', name: 'Honkai Impact 3', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWkiHeKwf5GExSZNXFhfJiiMZ9HXAZa1o1vLJMoggX8A&s',
+  products:[
+    { id: 'hi3-1', name: 'Crystals 60', desc: 'Pack of 60 Crystals', price: 15000 },
+    { id: 'hi3-2', name: 'Crystals 300', desc: 'Big pack of Crystals', price: 70000 },] },
+   { id: 'Honor Of King', name: 'Honor Of king', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSENwU4Jls-krdSTsIUxsCKvrhzS8YWmRoipvPivss_Yg&s',
+  products:[
+    { id: 'hok-1', name: 'Tokens 100', desc: '100 Tokens pack', price: 10000 },
+    { id: 'hok-2', name: 'Tokens 500', desc: '500 Tokens + Bonus', price: 45000 },] },
+     { id: 'Magic Chess: Go Go', name: 'Magic Chess: Go Go', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgLvByewqUQTuuP1UR9uZXL1pmlDX7m19oSySS-kAfHw&s',
+  products:[
+    { id: 'mc-1', name: 'Gold 100', desc: '100 Gold Coins', price: 8000 },
+    { id: 'mc-2', name: 'Gold 500', desc: '500 Gold Coins + Bonus', price: 30000 },] },  ];
+
+    const gameGrid = document.getElementById('game-grid');
+    const productsSection = document.getElementById('products-section');
+    const gamesSection = document.getElementById('games-section');
+    const productGameImage = document.getElementById('product-game-image');
+    const productGameName = document.getElementById('product-game-name');
+    const productCardsContainer = document.getElementById('product-cards');
+    const userIdInput = document.getElementById('user-id-input');
+
+    function renderGameCards(){
+      gameGrid.innerHTML = '';
+      games.forEach(game => {
+        const gameItem = document.createElement('div');
+        gameItem.className = 'game-item';
+
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        card.tabIndex = 0;
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', `Select ${game.name} game`);
+        const img = document.createElement('img');
+        img.src = game.image;
+        img.alt = game.alt;
+        card.appendChild(img);
+
+        const name = document.createElement('div');
+        name.className = 'game-name';
+        name.tabIndex = 0;
+        name.setAttribute('role', 'button');
+        name.setAttribute('aria-label', `Select ${game.name} game`);
+        name.textContent = game.name;
+
+        [card, name].forEach(elem => {
+          elem.addEventListener('click', () => {
+            showProductsForGame(game.id);
+          });
+          elem.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              showProductsForGame(game.id);
+            }
+          });
+        });
+
+        gameItem.appendChild(card);
+        gameItem.appendChild(name);
+        gameGrid.appendChild(gameItem);
+      });
+    }
+
+    function formatPrice(price){
+      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(price);
+    }
+
+    function renderProductCards(game){
+      productCardsContainer.innerHTML = '';
+      game.products.forEach(prod => {
+        const card = document.createElement('article');
+        card.className = 'product-card';
+        card.tabIndex = 0;
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', `${prod.name}, ${prod.desc}, price ${formatPrice(prod.price).replace(',00', '')}`);
+
+        card.innerHTML = `
+      <div style="position: relative; width: 100%; height: 100%; min-height: 120px; padding: 12px;">
+        <div style="font-weight: bold;">${prod.name}</div>
+        <div style="position: absolute; right: 12px; bottom: 10px; font-weight: bold;">${formatPrice(prod.price).replace(',00', '')}</div>
+      </div>
+    `;
+
+        card.addEventListener('click', () => {
+          confirmOrder(game.name, prod);
+        });
+        card.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            confirmOrder(game.name, prod);
+          }
+        });
+
+        productCardsContainer.appendChild(card);
+      });
+    }
+
+    
+function showProductsForGame(gameId){
+  const game = games.find(g => g.id === gameId);
+  if (!game) return;
+
+  productGameImage.src = game.image;
+  productGameImage.alt = game.alt;
+  productGameName.textContent = game.name;
+  userIdInput.value = '';
+
+  // Hapus Zone ID lama jika ada
+  const wrapper = userIdInput.closest('.input-pair');
+  const oldZone = document.getElementById('zone-id-input');
+  if (oldZone && oldZone.parentElement === wrapper) {
+    wrapper.removeChild(oldZone);
+  }
+
+  // Hanya tambahkan Zone ID jika game adalah Mobile Legends
+  if (game.id === 'mobile-legends') {
+    const zoneInput = document.createElement('input');
+    zoneInput.type = 'text';
+    zoneInput.id = 'zone-id-input';
+    zoneInput.className = 'input-user-id';
+    zoneInput.placeholder = 'Zone ID kamu di Mobile Legends';
+    zoneInput.setAttribute('autocomplete', 'off');
+    zoneInput.setAttribute('aria-label', 'Zone ID input');
+    wrapper.appendChild(zoneInput);
+  }
+
+  renderProductCards(game);
+  gamesSection.hidden = true;
+  document.getElementById('pulsa-section').hidden = true;
+  productsSection.hidden = false;
+  document.getElementById('slider-section').hidden = true;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+
+    function confirmOrder(gameName, product) {
+
+      const userId = userIdInput.value.trim();
+      if(!userId){
+        userIdInput.focus();
+        return;
+      }
+        const zoneIdInput = document.getElementById('zone-id-input');
+  const zoneId = zoneIdInput ? zoneIdInput.value.trim() : '';
+  const fullId = (gameName === 'Mobile Legends' && zoneId) ? userId + ' (' + zoneId + ')' : userId;
+  const cleanPrice = "Rp " + Math.round(product.price).toLocaleString("id-ID");
+  const message = encodeURIComponent(`Assalamualaikum, saya mau top up dari game ${gameName} Berisi ${product.name},Harga ${cleanPrice}.ini ID Game saya ${fullId}. Mohon dikirim pesannya.`);
+      const url = `https://wa.me/${whatsappNumber}?text=${message}`;
+      const confirmMsg = `Anda akan top up:\nGame: ${gameName}\nTop Up: ${product.name}\nHarga: ${cleanPrice}\nID User: ${fullId}\n\nPastikan data benar, salah input bukan tanggung jawab kami, konfirmasi pesanan?`;
+      showConfirm(confirmMsg, function() {
+  window.open(url, "_blank");
+});
+    }
+
+    // Event delegation for back navigation - no back button in product page
+    // User must use browser back or other UI
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll('.category-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const category = item.dataset.category;
+
+        const gameSection = document.getElementById('games-section');
+        const pulsaSection = document.getElementById('pulsa-section');
+
+        gameSection?.setAttribute('hidden', true);
+        pulsaSection?.setAttribute('hidden', true);
+
+        if (category === 'game') {
+          gameSection?.removeAttribute('hidden');
+        } else if (category === 'voucher') {
+          voucherSection?.removeAttribute('hidden');
+        } else if (category === 'pulsa') {
+          pulsaSection?.removeAttribute('hidden');
+        }
+      });
+    });
+
+  const slides = document.querySelectorAll(".slider-track img");
+  let index = 0;
+
+  function showSlide(i) {
+    slides.forEach((img, idx) => {
+      img.classList.toggle("active", idx === i);
+    });
+  }
+
+  setInterval(() => {
+    index = (index + 1) % slides.length;
+    showSlide(index);
+  }, 3000);
+});
+
+    function showProductsForVoucher(voucherId) {
+      const voucher = vouchers.find(v => v.id === voucherId);
+      if (!voucher) return;
+      productGameImage.src = voucher.image;
+      productGameImage.alt = voucher.alt;
+      productGameName.textContent = voucher.name;
+      userIdInput.value = '';
+const wrapper = userIdInput.closest('.input-pair');
+if (game.id === 'mobile-legends') {
+  if (!document.getElementById('zone-id-input')) {
+    const zoneInput = document.createElement('input');
+    zoneInput.type = 'text';
+    zoneInput.id = 'zone-id-input';
+    zoneInput.className = 'input-user-id';
+    zoneInput.placeholder = 'Zone ID kamu di Mobile Legends';
+    zoneInput.setAttribute('autocomplete', 'off');
+    zoneInput.setAttribute('aria-label', 'Zone ID input');
+    if (wrapper) wrapper.appendChild(zoneInput);
+  } else {
+    document.getElementById('zone-id-input').style.display = 'block';
+  }
+} else {
+  const zoneInput = document.getElementById('zone-id-input');
+  if (zoneInput) {
+    zoneInput.style.display = 'none';
+  }
+}
+
+      renderProductCards(voucher);
+      gamesSection.hidden = true;
+  document.getElementById('pulsa-section').hidden = true;
+      vouchersSection.hidden = true;
+      productsSection.hidden = false;
+      document.getElementById('slider-section').hidden = true;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      userIdInput();
+    }
+
+renderGameCards();
+
+    // Event click voucher card
+    document.querySelectorAll('#voucher-grid .game-item').forEach(item => {
+      const voucherId = item.dataset.voucherId;
+      const nameEl = item.querySelector('.game-name');
+      const cardEl = item.querySelector('.game-card');
+
+      [nameEl, cardEl].forEach(elem => {
+        elem.addEventListener('click', () => {
+          showProductsForVoucher(voucherId);
+        });
+        elem.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            showProductsForVoucher(voucherId);
+          }
+        });
+      });
+    });
+
+
+    // Interaksi kategori: game & voucher
+    document.querySelectorAll('.category-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const category = item.dataset.category;
+        const gameSection = document.getElementById('games-section');
+        const voucherSection = document.getElementById('vouchers-section');
+
+        if (category === 'game') {
+          gameSection.hidden = false;
+          voucherSection.hidden = true;
+        } else if (category === 'voucher') {
+          gameSection.hidden = true;
+          voucherSection.hidden = false;
+        }
+      });
+    });
+
+  })();
+
+
+
+function toggleMenu() {
+  const nav = document.getElementById('nav-links');
+  nav.classList.toggle('show');
+}
+
+</script>
+<script>
+  function updateBodyClass() {
+    if (window.innerWidth <= 768) {
+      document.body.classList.add('mobile');
+    } else {
+      document.body.classList.remove('mobile');
+    }
+  }
+
+  window.addEventListener('resize', updateBodyClass);
+  window.addEventListener('DOMContentLoaded', updateBodyClass);
+</script>
+<script>
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
+
+  function applyGridStyle() {
+    const grid = document.getElementById('game-grid');
+    if (!grid) return;
+
+    grid.style.display = 'grid';
+    grid.style.gridTemplateColumns = isMobile() ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)';
+    grid.style.gap = isMobile() ? '1.3rem' : '2rem';
+    grid.style.padding = isMobile() ? '1.2rem' : '2rem';
+  }
+
+  window.addEventListener('resize', applyGridStyle);
+  window.addEventListener('DOMContentLoaded', applyGridStyle);
+</script>
+<script>
+  function applyGridStyle() {
+    const grid = document.getElementById('game-grid');
+    if (!grid) return;
+
+    grid.style.display = 'grid';
+
+    if (window.innerWidth <= 768) {
+      grid.style.gridTemplateColumns = 'repeat(4, 1fr)';
+      grid.style.gap = '0.5rem';
+      grid.style.padding = '0.6rem';
+    } else {
+      grid.style.gridTemplateColumns = 'repeat(4, 1fr)';
+      grid.style.gap = '2rem';
+      grid.style.padding = '2rem';
+    }
+  }
+
+  window.addEventListener('resize', applyGridStyle);
+  window.addEventListener('load', applyGridStyle);
+  document.addEventListener('DOMContentLoaded', applyGridStyle);
+  
+  // Animasi klik kategori menu
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll('.category-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const category = item.dataset.category;
+
+        const gameSection = document.getElementById('games-section');
+        const voucherSection = document.getElementById('vouchers-section');
+        const pulsaSection = document.getElementById('pulsa-section');
+
+        gameSection?.setAttribute('hidden', true);
+        voucherSection?.setAttribute('hidden', true);
+        pulsaSection?.setAttribute('hidden', true);
+
+        if (category === 'game') {
+          gameSection?.removeAttribute('hidden');
+        } else if (category === 'voucher') {
+          voucherSection?.removeAttribute('hidden');
+        } else if (category === 'pulsa') {
+          pulsaSection?.removeAttribute('hidden');
+        }
+      });
+    });
+
+  const egoryItems = document.querySelectorAll(".egory-item");
+  egoryItems.forEach(item => {
+    item.addEventListener("click", () => {
+      item.classList.add("active-bounce");
+      setTimeout(() => {
+        item.classList.remove("active-bounce");
+      }, 300);
+    });
+  });
+});
+
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const berandaLink = document.querySelector('a[href="#slider-section"]');
+  const sliderSection = document.querySelector('#slider-section');
+  const gamesSection = document.querySelector('#games-section');
+  const voucherSection = document.querySelector('#vouchers-section');
+  const pulsaSection = document.querySelector('#pulsa-section');
+  const productsSection = document.querySelector('#products-section');
+
+  berandaLink.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    // Tampilkan slider dan game
+    sliderSection.removeAttribute('hidden');
+    gamesSection.removeAttribute('hidden');
+
+    // Sembunyikan yang lain
+    voucherSection.setAttribute('hidden', 'true');
+    pulsaSection.setAttribute('hidden', 'true');
+    productsSection.setAttribute('hidden', 'true');
+
+    // Scroll ke atas
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+</script>
+
+
+<!-- Ikon GMEROPY dan Card WhatsApp -->
+<div class="floating-icon" onclick="toggleWhatsAppCard()">
+  <img src="https://i.imgur.com/0fkh4PO.png" alt="GMEROPY" />
+</div>
+
+
+
+<style>
+/* Navbar sticky biasa */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Floating Icon */
+.floating-icon {
+  position: fixed;
+  bottom: 10px;
+  right: 5px;
+  z-index: 999;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+}
+
+.floating-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* WhatsApp Card with Smooth Animation */
+.wa-card {
+  position: fixed;
+  bottom: 95px;
+  right: 0px;
+  transform: translateX(-25%) translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+  width: 55px;
+  height: 55px;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 999;
+}
+
+.wa-card.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-25%) translateY(0);
+}
+
+.wa-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+</style>
+
+<script>
+function toggleWhatsAppCard() {
+  const card = document.getElementById('whatsapp-card');
+  card.classList.toggle('show');
+}
+</script>
+
+
+<a href="https://wa.me/6289612954087" target="_blank" class="wa-card" id="whatsapp-card">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+</a>
+
+<style>
+.wa-card {
+  position: fixed;
+  bottom: 85px;
+  right: 0px;
+  transform: translateX(-35%) translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 999;
+}
+.wa-card.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-35%) translateY(0);
+}
+.wa-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+</style>
+
+
+<div id="custom-confirm" style="display:none;" class="custom-alert-backdrop">
+  <div class="custom-alert-box">
+    <p id="custom-confirm-message">Pesan konfirmasi</p>
+    <div class="custom-confirm-buttons">
+      <button onclick="closeConfirm()">Batal</button>
+      <button id="confirm-yes-btn">Iya</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<script>
+function showConfirm(message, onYes) {
+  const formatted = message.replace(/\n/g, "<br>");
+  document.getElementById('custom-confirm-message').innerHTML = formatted;
+  document.getElementById('custom-confirm').style.display = 'flex';
+
+  const yesBtn = document.getElementById('confirm-yes-btn');
+  yesBtn.onclick = function() {
+    closeConfirm();
+    onYes();
+  };
+}
+
+function closeConfirm() {
+  document.getElementById('custom-confirm').style.display = 'none';
+}
+</script>
+
+
+<script>
+// Tambahkan array produk pulsa
+const pulsa = [
+  {
+    id: 'telkomsel',
+    name: 'Telkomsel',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5qH9Bu-2dpjQ2kbTg3JZoKEdJLmci9BGdig&s',
+    products: [
+      { id: 'tsel-5k', name: 'Pulsa 5.000', desc: 'Pulsa reguler 5.000', price: 7000 },
+      { id: 'tsel-10k', name: 'Pulsa 10.000', desc: 'Pulsa reguler 10.000', price: 12000 }
+    ]
+  },
+  {
+    id: 'tri',
+    name: 'Tri',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtvonxoRxDcMHj5DnEQ2zbrBhKsryYxkDDIUrwZ1KUng&s',
+    products: [
+      { id: 'tri-5k', name: 'Pulsa 5.000', desc: 'Pulsa reguler 5.000', price: 7000 },
+      { id: 'tri-10k', name: 'Pulsa 10.000', desc: 'Pulsa reguler 10.000', price: 12000 }
+    ]
+  },
+  {
+    id: 'indosat',
+    name: 'Indosat',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq88soqksg_xPikkbF3-WjshfDzXP0dvZILanATdlPdw&s',
+    products: [
+      { id: 'isat-5k', name: 'Pulsa 5.000', desc: 'Pulsa reguler 5.000', price: 7000 },
+      { id: 'isat-10k', name: 'Pulsa 10.000', desc: 'Pulsa reguler 10.000', price: 12000 }
+    ]
+  },
+  {
+    id: 'xl',
+    name: 'XL',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT4VL3sds3ZnjyquMXAYRwx2VtR7RfazY0q43CN_DDjA&s',
+    products: [
+      { id: 'xl-5k', name: 'Pulsa 5.000', desc: 'Pulsa reguler 5.000', price: 7000 },
+      { id: 'xl-10k', name: 'Pulsa 10.000', desc: 'Pulsa reguler 10.000', price: 12000 }
+    ]
+  },
+  {
+    id: 'smartfren',
+    name: 'Smartfren',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSng7VkcJCo_ki4_UhNQGfKlamvY2xw9UUFWA&s',
+    products: [
+      { id: 'sf-5k', name: 'Pulsa 5.000', desc: 'Pulsa reguler 5.000', price: 7000 },
+      { id: 'sf-10k', name: 'Pulsa 10.000', desc: 'Pulsa reguler 10.000', price: 12000 }
+    ]
+  },
+  {
+    id: 'axis',
+    name: 'Axis',
+    image: 'https://placehold.co/210x210/00fff7/ffffff?text=Axis',
+    products: [
+      { id: 'axis-5k', name: 'Pulsa 5.000', desc: 'Pulsa reguler 5.000', price: 7000 },
+      { id: 'axis-10k', name: 'Pulsa 10.000', desc: 'Pulsa reguler 10.000', price: 12000 }
+    ]
+  }
+];
+
+// Tambahkan fungsi render produk pulsa
+function renderPulsaCards(id) {
+  const operator = pulsa.find(p => p.id === id);
+  const list = document.getElementById("product-cards");
+  const image = document.getElementById("product-game-image");
+  const name = document.getElementById("product-game-name");
+  const input = document.getElementById("user-id-input");
+
+  if (!operator) return;
+
+  image.src = operator.image;
+  image.alt = operator.name;
+  name.textContent = operator.name;
+  input.value = "";
+
+  list.innerHTML = '';
+
+  if (!operator.products || operator.products.length === 0) {
+    list.innerHTML = '<p>Belum ada produk pulsa ditambahkan.</p>';
+    return;
+  }
+
+  operator.products.forEach(prod => {
+    const card = document.createElement('article');
+    card.className = 'product-card';
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', `${prod.name}, ${prod.desc}, price Rp${prod.price}`);
+
+    card.innerHTML = `
+      <div style="position: relative; width: 100%; height: 100%; min-height: 120px; padding: 12px;">
+        <div style="font-weight: bold;">${prod.name}</div>
+        <div style="position: absolute; right: 12px; bottom: 10px; font-weight: bold;">Rp ${prod.price.toLocaleString()}</div>
+      </div>
+    `;
+
+    card.addEventListener('click', () => {
+      confirmOrder(operator.name, prod);
+    });
+
+    list.appendChild(card);
+  });
+
+  document.getElementById("games-section").hidden = true;
+  document.getElementById("products-section").hidden = false;
+}
+
+// Tambahkan event listener ke semua kartu pulsa
+setTimeout(() => {
+  const pulsaItems = document.querySelectorAll("#pulsa-grid .game-item");
+  pulsaItems.forEach(item => {
+    const id = item.getAttribute("data-id");
+    item.addEventListener("click", () => renderPulsaCards(id));
+  });
+}, 1000);
+</script>
+
+
+<script>
+  function showTopup() {
+    document.getElementById('slider-section').hidden = true;
+    document.getElementById('products-section').hidden = true;
+
+    document.getElementById('games-section').hidden = false;
+    document.getElementById('pulsa-section').hidden = false;
+
+    document.getElementById('games-section').scrollIntoView();
+  }
+</script>
+
+
+<script>
+  function showTopup() {
+    document.getElementById('slider-section').hidden = true;
+    document.getElementById('products-section').hidden = true;
+    document.getElementById('games-section').hidden = false;
+    document.getElementById('pulsa-section').hidden = false;
+  }
+
+  function showHome() {
+  document.getElementById('slider-section').hidden = false;
+  document.getElementById('games-section').hidden = false;
+  document.getElementById('products-section').hidden = true;
+  document.getElementById('pulsa-section').hidden = true;
+
+  // Tampilkan kembali kategori dan garis separator
+  const categoryMenu = document.getElementById('category-menu');
+  if (categoryMenu) categoryMenu.style.display = 'flex';
+
+  const separators = document.querySelectorAll('.menu-separator');
+  separators.forEach(el => el.style.display = 'block');
+}
+</script>
+
+
+<script>
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('welcome-screen').classList.add('hidden');
+  }, 2500);
+});
+</script>
+</body>
+</html>
+<style>
+@media (min-width: 768px) {
+  .slider {
+  position: relative;
+  margin-bottom: 0.8rem;
+  overflow: hidden;
+  border-radius: 1rem;
+  width: 100%;
+  box-shadow:
+    0 0 12px 2px #00fff7aa,
+    0 0 24px 4px #00fff778;
+}
+
+  .slider-track {
+    height: auto;
+  }
+
+  .slide {
+    height: auto;
+  }
+
+  .slide img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 1rem;
+  display: block;
+}
+}
+
+@media (min-width: 481px) {
+  
+}
+
+@media (max-width: 360px) {
+  .category-item {
+    font-size: 0.75rem !important;
+    padding: 0.4rem 0.6rem !important;
+  }
+}
+
+.slider {
+  width: 100%;
+  max-width: 100vw;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.game-grid, .pulsa-grid {
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+}
+
+@media (max-width: 200px) {
+  .category-item {
+    font-size: 0.75rem !important;
+    padding: 0.4rem 0.6rem !important;
+  }
+}
+
+.slider {
+  width: 100%;
+  max-width: 100vw;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.game-grid, .pulsa-grid {
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+}
+
+
+
+
+
+
+@media (max-width: 480px) {
+  
+
+  .game-item {
+    margin-bottom: 1rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.45rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.8rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.4rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.6rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.4rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.5rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.35rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.4rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.3rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0.3rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.2rem;
+    text-align: center;
+  }
+}
+
+
+  .game-item {
+    margin-bottom: 0rem !important;
+  }
+
+  .game-card {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100%;
+    font-size: 0.75rem;
+    margin-top: 0.1rem;
+    text-align: center;
+  }
+}
+
+
+@media (max-width: 768px) {
+  #game-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.3rem !important;
+    padding: 1.2rem !important;
+    width: 100% !important;
+  }
+
+  .game-item {
+    margin-bottom: 1rem !important;
+    width: 100% !important;
+  }
+
+  .game-card {
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    margin: 0 !important;
+  }
+
+  .game-name {
+    width: 100% !important;
+    font-size: 0.75rem !important;
+    margin-top: 0.45rem !important;
+    text-align: center !important;
+  }
+}
+
+
+body.mobile #game-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 1.3rem !important;
+  padding: 1.2rem !important;
+}
+
+body.mobile .game-item {
+  margin-bottom: 1rem !important;
+  width: 100% !important;
+}
+
+body.mobile .game-card {
+  width: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+  margin: 0 !important;
+}
+
+body.mobile .game-name {
+  width: 100% !important;
+  font-size: 0.75rem !important;
+  margin-top: 0.45rem !important;
+  text-align: center !important;
+}
+
+
+#games-section {
+  margin-top: 0.5rem !important;
+}
+
+
+#category-menu + .menu-separator + #games-section {
+  margin-top: 0.5rem !important;
+  padding-top: 0 !important;
+}
+
+
+.category-menu {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.menu-separator {
+  margin-top: 0 !important;
+  margin-bottom: 0.3rem !important;
+}
+
+#games-section {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+main {
+  gap: 1rem !important;
+}
+
+
+#game-grid {
+  justify-content: flex-start !important;
+}
+
+
+#game-grid {
+  justify-content: start !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+
+/* === Penyesuaian ukuran & posisi voucher agar sama dengan game === */
+#voucher-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 2rem 1.5rem;
+  justify-items: center;
+  width: 100%;
+}
+
+#voucher-grid .game-item {
+  max-width: 210px;
+  width: 100%;
+}
+
+#voucher-grid .game-card {
+  width: 100%;
+  max-width: 210px;
+  aspect-ratio: 1 / 1;
+}
+
+
+@media (min-width: 769px) {
+  #voucher-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+    gap: 0.75rem !important;
+    justify-items: center !important;
+  }
+
+  #voucher-grid .game-item {
+    max-width: 120px !important;
+    width: 100% !important;
+    margin-bottom: 0.8rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  #voucher-grid .game-card {
+    max-width: 120px !important;
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    background: rgba(0, 255, 247, 0.12) !important;
+    border-radius: 0.6rem !important;
+    box-shadow: 0 0 4px 1px #00fff7aa, 0 0 10px 2px #00fff766 !important;
+    overflow: hidden !important;
+    border: 1px solid #00fff744 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    cursor: pointer !important;
+  }
+
+  #voucher-grid .game-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  #voucher-grid .game-name {
+    margin-top: 0.4rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    color: #00fff7 !important;
+    text-shadow: 0 0 4px #00fff788 !important;
+    width: 120px !important;
+  }
+}
+
+
+@media (min-width: 769px) {
+  #voucher-grid {
+    justify-content: start !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+}
+
+
+@media (min-width: 769px) {
+  #voucher-grid {
+    justify-content: start !important;
+    margin-left: -10px !important;
+    padding-left: 0 !important;
+  }
+}
+
+
+@media (min-width: 769px) {
+  #voucher-grid {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .tab-content > div:nth-child(2) {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
+
+@media (min-width: 769px) {
+  #game-grid {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .tab-content > div:nth-child(1) {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
+
+@media (min-width: 769px) {
+  #game-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+    gap: 0.75rem !important;
+    justify-items: center !important;
+  }
+
+  #game-grid .game-item {
+    max-width: 120px !important;
+    width: 100% !important;
+    margin-bottom: 0.8rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  #game-grid .game-card {
+    max-width: 120px !important;
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 0.6rem !important;
+    box-shadow: 0 0 4px 1px #00fff7aa, 0 0 10px 2px #00fff766 !important;
+    background: rgba(0, 255, 247, 0.12) !important;
+    border: 1px solid #00fff744 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    cursor: pointer !important;
+  }
+
+  #game-grid .game-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  #game-grid .game-name {
+    margin-top: 0.4rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    color: #00fff7 !important;
+    text-shadow: 0 0 4px #00fff788 !important;
+    width: 120px !important;
+  }
+}
+
+
+@media (min-width: 769px) {
+  #voucher-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+    gap: 0.75rem !important;
+    justify-items: center !important;
+  }
+
+  #voucher-grid .game-item {
+    max-width: 120px !important;
+    width: 100% !important;
+    margin-bottom: 0.8rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  #voucher-grid .game-card {
+    max-width: 120px !important;
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 0.6rem !important;
+    box-shadow: 0 0 4px 1px #00fff7aa, 0 0 10px 2px #00fff766 !important;
+    background: rgba(0, 255, 247, 0.12) !important;
+    border: 1px solid #00fff744 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    cursor: pointer !important;
+  }
+
+  #voucher-grid .game-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  #voucher-grid .game-name {
+    margin-top: 0.4rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    color: #00fff7 !important;
+    text-shadow: 0 0 4px #00fff788 !important;
+    width: 120px !important;
+  }
+}
+
+
+@media (min-width: 769px) {
+  #game-grid {
+    justify-content: start !important;
+    margin-left: -10px !important;
+    padding-left: 0 !important;
+  }
+}
+
+</style>
+
+<style>
+@media (min-width: 769px) {
+  .product-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1.2rem;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .product-card {
+    aspect-ratio: 1 / 1;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+    background: rgba(0, 255, 247, 0.12);
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 2px solid transparent;
+    box-shadow: 0 0 10px 1px #00fff7;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .product-card:hover,
+  .product-card:focus-visible {
+    transform: translateY(-6px);
+    box-shadow: 0 0 28px 4px #00fff7;
+    border-color: #00fff7;
+  }
+
+  .product-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-info {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+    background: rgba(0,0,0,0.25);
+    text-shadow: 0 0 6px #ff1a1a;
+    color: #ff1a1a;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: rgba(10, 25, 30, 0.95);
+    border-top: 1px solid #00fff733;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    padding: 0;
+    transition:
+      max-height 1s ease,
+      opacity 1s ease,
+      padding 0.5s ease,
+      visibility 1s ease;
+    display: flex;
+    flex-direction: column;
+    z-index: 150;
+  }
+
+  nav.show {
+    max-height: 500px;
+    opacity: 1;
+    visibility: visible;
+    padding: 1rem 0;
+  }
+
+  nav a {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #00fff733;
+    text-align: center;
+  }
+
+  nav a:last-child {
+    border-bottom: none;
+  }
+
+  .menu-toggle {
+    display: block;
+    z-index: 2000;
+  }
+}
+</style>
+
+<script>
+  function toggleMenu() {
+    const nav = document.getElementById('nav-links');
+    nav.classList.toggle('show');
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const nav = document.getElementById('nav-links');
+    const links = nav.querySelectorAll('a');
+
+    // Tutup menu saat link diklik
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('show');
+      });
+    });
+
+    // Smooth scroll ke slider-section dengan offset 20px
+    const homeLink = document.querySelector('a[href="#slider-section"]');
+    if (homeLink) {
+      homeLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector('#slider-section');
+        if (target) {
+          const topOffset = target.getBoundingClientRect().top + window.scrollY - 20;
+          window.scrollTo({ top: topOffset, behavior: 'smooth' });
+          nav.classList.remove('show');
+        }
+      });
+    }
+  });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const berandaLink = document.querySelector('a[href="#slider-section"]');
+  const sliderSection = document.querySelector('#slider-section');
+  const gamesSection = document.querySelector('#games-section');
+  const voucherSection = document.querySelector('#vouchers-section');
+  const pulsaSection = document.querySelector('#pulsa-section');
+  const productsSection = document.querySelector('#products-section');
+
+  berandaLink.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    // Tampilkan slider dan game
+    sliderSection.removeAttribute('hidden');
+    gamesSection.removeAttribute('hidden');
+
+    // Sembunyikan yang lain
+    voucherSection.setAttribute('hidden', 'true');
+    pulsaSection.setAttribute('hidden', 'true');
+    productsSection.setAttribute('hidden', 'true');
+
+    // Scroll ke atas
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+</script>
+
+
+<!-- Ikon GMEROPY dan Card WhatsApp -->
+<div class="floating-icon" onclick="toggleWhatsAppCard()">
+  <img src="https://i.imgur.com/0fkh4PO.png" alt="GMEROPY" />
+</div>
+
+
+
+<style>
+/* Navbar sticky biasa */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Floating Icon */
+.floating-icon {
+  position: fixed;
+  bottom: 10px;
+  right: 5px;
+  z-index: 999;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+}
+
+.floating-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* WhatsApp Card with Smooth Animation */
+.wa-card {
+  position: fixed;
+  bottom: 95px;
+  right: 0px;
+  transform: translateX(-25%) translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+  width: 55px;
+  height: 55px;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 999;
+}
+
+.wa-card.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-25%) translateY(0);
+}
+
+.wa-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+</style>
+
+<script>
+function toggleWhatsAppCard() {
+  const card = document.getElementById('whatsapp-card');
+  card.classList.toggle('show');
+}
+</script>
+
+
+<a href="https://wa.me/6289612954087" target="_blank" class="wa-card" id="whatsapp-card">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+</a>
+
+<style>
+.wa-card {
+  position: fixed;
+  bottom: 85px;
+  right: 0px;
+  transform: translateX(-35%) translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 999;
+}
+.wa-card.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-35%) translateY(0);
+}
+.wa-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.custom-alert-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 10, 20, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.custom-alert-box {
+  background: #0f2027;
+  border: 2px solid #00fff7aa;
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 12px #00fff755;
+  text-align: center;
+  max-width: 90%;
+  color: #00fff7;
+  font-weight: 600;
+}
+
+.custom-confirm-buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.custom-confirm-buttons button {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 0.6rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 6px #00fff744;
+  transition: background 0.3s ease;
+}
+
+.custom-confirm-buttons button:first-child {
+  background: #ff4d4d;
+  color: #fff;
+}
+
+.custom-confirm-buttons button:last-child {
+  background: #00ff88;
+  color: #000;
+}
+
+</style>
+
+
+<div id="custom-confirm" style="display:none;" class="custom-alert-backdrop">
+  <div class="custom-alert-box">
+    <p id="custom-confirm-message">Pesan konfirmasi</p>
+    <div class="custom-confirm-buttons">
+      <button onclick="closeConfirm()">Batal</button>
+      <button id="confirm-yes-btn">Iya</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<script>
+function showConfirm(message, onYes) {
+  const formatted = message.replace(/\n/g, "<br>");
+  document.getElementById('custom-confirm-message').innerHTML = formatted;
+  document.getElementById('custom-confirm').style.display = 'flex';
+
+  const yesBtn = document.getElementById('confirm-yes-btn');
+  yesBtn.onclick = function() {
+    closeConfirm();
+    onYes();
+  };
+}
+
+function closeConfirm() {
+  document.getElementById('custom-confirm').style.display = 'none';
+}
+
+document.querySelectorAll('#pulsa-grid .game-item').forEach(item => {
+  const gameId = item.dataset.id;
+  const gameName = item.querySelector('.game-name').textContent;
+  const gameImg = item.querySelector('img')?.src || '';
+
+  const pulsaGame = {
+    id: gameId,
+    name: gameName,
+    image: gameImg,
+    products: [],
+  };
+
+  [item, ...item.querySelectorAll('.game-card, .game-name')].forEach(elem => {
+    elem.style.cursor = 'pointer';
+    elem.addEventListener('click', () => {
+      showProductsForGamePulsa(pulsaGame);
+    });
+  });
+});
+
+function showProductsForGamePulsa(game) {
+  document.getElementById('product-game-image').src = game.image;
+  document.getElementById('product-game-image').alt = game.name;
+  document.getElementById('product-game-name').textContent = game.name;
+  document.getElementById('user-id-input').value = '';
+
+  const wrapper = document.getElementById('user-id-input').closest('.input-pair');
+  const oldZone = document.getElementById('zone-id-input');
+  if (oldZone && oldZone.parentElement === wrapper) {
+    wrapper.removeChild(oldZone);
+  }
+
+  document.getElementById('product-cards').innerHTML = '<div style="color:#00fff7;font-weight:700;">Belum ada produk pulsa ditambahkan.</div>';
+
+  document.getElementById('games-section').hidden = true;
+  document.getElementById('pulsa-section').hidden = true;
+  document.getElementById('products-section').hidden = false;
+  
+  document.getElementById('slider-section').hidden = true;
+  const categoryMenu = document.getElementById('category-menu');
+  if (categoryMenu) categoryMenu.style.display = 'none';
+  const separator = document.querySelector('.menu-separator');
+  if (separator) separator.style.display = 'none';
+  document.getElementById('slider-section').scrollIntoView();
+
+}
+
+
+games.push({
+  id: 'telkomsel',
+  name: 'Telkomsel',
+  image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5qH9Bu-2dpjQ2kbTg3JZoKEdJLmci9BGdig&s',
+  products: [{id: 'pulsa-5', name: 'Pulsa 5rb', desc: 'Pulsa Rp 5.000', price: 5000}, {id: 'pulsa-10', name: 'Pulsa 10rb', desc: 'Pulsa Rp 10.000', price: 10000}, {id: 'pulsa-20', name: 'Pulsa 20rb', desc: 'Pulsa Rp 20.000', price: 20000}]
+});
+games.push({
+  id: 'indosat',
+  name: 'Indosat',
+  image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq88soqksg_xPikkbF3-WjshfDzXP0dvZILanATdlPdw&s',
+  products: [{'id': 'pulsa-5', 'name': 'Pulsa 5rb', 'desc': 'Pulsa Rp 5.000', 'price': 5000}, {'id': 'pulsa-10', 'name': 'Pulsa 10rb', 'desc': 'Pulsa Rp 10.000', 'price': 10000}, {'id': 'pulsa-20', 'name': 'Pulsa 20rb', 'desc': 'Pulsa Rp 20.000', 'price': 20000}]
+});
+games.push({
+  id: 'xl',
+  name: 'XL Axiata',
+  image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT4VL3sds3ZnjyquMXAYRwx2VtR7RfazY0q43CN_DDjA&s',
+  products: [{'id': 'pulsa-5', 'name': 'Pulsa 5rb', 'desc': 'Pulsa Rp 5.000', 'price': 5000}, {'id': 'pulsa-10', 'name': 'Pulsa 10rb', 'desc': 'Pulsa Rp 10.000', 'price': 10000}, {'id': 'pulsa-20', 'name': 'Pulsa 20rb', 'desc': 'Pulsa Rp 20.000', 'price': 20000}]
+});
+games.push({
+  id: 'tri',
+  name: 'Tri',
+  image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtvonxoRxDcMHj5DnEQ2zbrBhKsryYxkDDIUrwZ1KUng&s',
+  products: [{'id': 'pulsa-5', 'name': 'Pulsa 5rb', 'desc': 'Pulsa Rp 5.000', 'price': 5000}, {'id': 'pulsa-10', 'name': 'Pulsa 10rb', 'desc': 'Pulsa Rp 10.000', 'price': 10000}, {'id': 'pulsa-20', 'name': 'Pulsa 20rb', 'desc': 'Pulsa Rp 20.000', 'price': 20000}]
+});
+games.push({
+  id: 'smartfren',
+  name: 'Smartfren',
+  image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSng7VkcJCo_ki4_UhNQGfKlamvY2xw9UUFWA&s',
+  products: [{'id': 'pulsa-5', 'name': 'Pulsa 5rb', 'desc': 'Pulsa Rp 5.000', 'price': 5000}, {'id': 'pulsa-10', 'name': 'Pulsa 10rb', 'desc': 'Pulsa Rp 10.000', 'price': 10000}, {'id': 'pulsa-20', 'name': 'Pulsa 20rb', 'desc': 'Pulsa Rp 20.000', 'price': 20000}]
+});
+games.push({
+  id: 'axis',
+  name: 'Axis',
+  image: 'https://placehold.co/210x210/00fff7/ffffff?text=Axis',
+  products: [{'id': 'pulsa-5', 'name': 'Pulsa 5rb', 'desc': 'Pulsa Rp 5.000', 'price': 5000}, {'id': 'pulsa-10', 'name': 'Pulsa 10rb', 'desc': 'Pulsa Rp 10.000', 'price': 10000}, {'id': 'pulsa-20', 'name': 'Pulsa 20rb', 'desc': 'Pulsa Rp 20.000', 'price': 20000}]
+});
+
+function showHome() {
+  document.getElementById('slider-section').hidden = false;
+  document.getElementById('games-section').hidden = false;
+  document.getElementById('products-section').hidden = true;
+  document.getElementById('pulsa-section').hidden = true;
+
+  // Tampilkan kembali kategori dan garis separator
+  const categoryMenu = document.getElementById('category-menu');
+  if (categoryMenu) categoryMenu.style.display = 'flex';
+
+  const separators = document.querySelectorAll('.menu-separator');
+  separators.forEach(el => el.style.display = 'block');
+}
+
+</script>
+
+
+<script>
+// Tambahkan array produk pulsa
+const pulsa = [
+  {
+    id: 'telkomsel',
+    name: 'Telkomsel',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5qH9Bu-2dpjQ2kbTg3JZoKEdJLmci9BGdig&s',
+    products: [
+      { id: 'tsel-5k', name: 'Pulsa 5.000', desc: 'Pulsa reguler 5.000', price: 7000 },
+      { id: 'tsel-10k', name: 'Pulsa 10.000', desc: 'Pulsa reguler 10.000', price: 12000 }
+    ]
+  },
+  {
+    id: 'tri',
+    name: 'Tri',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtvonxoRxDcMHj5DnEQ2zbrBhKsryYxkDDIUrwZ1KUng&s',
+    products: [
+      { id: 'tri-5k', name: 'Pulsa 5.000', desc: 'Pulsa reguler 5.000', price: 6000 },
+      { id: 'tri-10k', name: 'Pulsa 10.000', desc: 'Pulsa reguler 10.000', price: 11000 }
+    ]
+  },
+  {
+    id: 'indosat',
+    name: 'Indosat',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq88soqksg_xPikkbF3-WjshfDzXP0dvZILanATdlPdw&s',
+    products: [
+      { id: 'isat-5k', name: 'Pulsa 5.000', desc: 'Pulsa reguler 5.000', price: 7000 },
+      { id: 'isat-10k', name: 'Pulsa 10.000', desc: 'Pulsa reguler 10.000', price: 12000 }
+    ]
+  },
+  {
+    id: 'xl',
+    name: 'XL',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT4VL3sds3ZnjyquMXAYRwx2VtR7RfazY0q43CN_DDjA&s',
+    products: [
+      { id: 'xl-5k', name: 'Pulsa 5.000', desc: 'Pulsa reguler 5.000', price: 7000 },
+      { id: 'xl-10k', name: 'Pulsa 10.000', desc: 'Pulsa reguler 10.000', price: 12000 }
+    ]
+  },
+  {
+    id: 'smartfren',
+    name: 'Smartfren',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSng7VkcJCo_ki4_UhNQGfKlamvY2xw9UUFWA&s',
+    products: [
+      { id: 'sf-5k', name: 'Pulsa 5.000', desc: 'Pulsa reguler 5.000', price: 7000 },
+      { id: 'sf-10k', name: 'Pulsa 10.000', desc: 'Pulsa reguler 10.000', price: 12000 }
+    ]
+  },
+  {
+    id: 'axis',
+    name: 'Axis',
+    image: 'https://placehold.co/210x210/00fff7/ffffff?text=Axis',
+    products: [
+      { id: 'axis-5k', name: 'Pulsa 5.000', desc: 'Pulsa reguler 5.000', price: 7000 },
+      { id: 'axis-10k', name: 'Pulsa 10.000', desc: 'Pulsa reguler 10.000', price: 12000 }
+    ]
+  }
+];
+
+// Tambahkan fungsi render produk pulsa
+function renderPulsaCards(id) {
+  const operator = pulsa.find(p => p.id === id);
+  const list = document.getElementById("product-cards");
+  const image = document.getElementById("product-game-image");
+  const name = document.getElementById("product-game-name");
+  const input = document.getElementById("user-id-input");
+
+  if (!operator) return;
+
+  image.src = operator.image;
+  image.alt = operator.name;
+  name.textContent = operator.name;
+  input.value = "";
+
+  list.innerHTML = '';
+
+  if (!operator.products || operator.products.length === 0) {
+    list.innerHTML = '<p>Belum ada produk pulsa ditambahkan.</p>';
+    return;
+  }
+
+  operator.products.forEach(prod => {
+    const card = document.createElement('article');
+    card.className = 'product-card';
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', `${prod.name}, ${prod.desc}, price Rp${prod.price}`);
+
+    card.innerHTML = `
+      <div style="position: relative; width: 100%; height: 100%; min-height: 120px; padding: 12px;">
+        <div style="font-weight: bold;">${prod.name}</div>
+        <div style="position: absolute; right: 12px; bottom: 10px; font-weight: bold;">Rp ${prod.price.toLocaleString()}</div>
+      </div>
+    `;
+
+    card.addEventListener('click', () => {
+      confirmOrder(operator.name, prod);
+    });
+
+    list.appendChild(card);
+  });
+
+  document.getElementById("games-section").hidden = true;
+  document.getElementById("products-section").hidden = false;
+}
+
+// Tambahkan event listener ke semua kartu pulsa
+setTimeout(() => {
+  const pulsaItems = document.querySelectorAll("#pulsa-grid .game-item");
+  pulsaItems.forEach(item => {
+    const id = item.getAttribute("data-id");
+    item.addEventListener("click", () => renderPulsaCards(id));
+  });
+}, 1000);
+</script>
+
+
+<script>
+  function showTopup() {
+    document.getElementById('slider-section').hidden = true;
+    document.getElementById('products-section').hidden = true;
+
+    document.getElementById('games-section').hidden = false;
+    document.getElementById('pulsa-section').hidden = false;
+
+    document.getElementById('games-section').scrollIntoView();
+  }
+</script>
+
+
+<script>
+  function showTopup() {
+    document.getElementById('slider-section').hidden = true;
+    document.getElementById('products-section').hidden = true;
+    document.getElementById('games-section').hidden = false;
+    document.getElementById('pulsa-section').hidden = false;
+  }
+
+  function showHome() {
+  document.getElementById('slider-section').hidden = false;
+  document.getElementById('games-section').hidden = false;
+  document.getElementById('products-section').hidden = true;
+  document.getElementById('pulsa-section').hidden = true;
+
+  // Tampilkan kembali kategori dan garis separator
+  const categoryMenu = document.getElementById('category-menu');
+  if (categoryMenu) categoryMenu.style.display = 'flex';
+
+  const separators = document.querySelectorAll('.menu-separator');
+  separators.forEach(el => el.style.display = 'block');
+}
+
+function showHome() {
+  document.getElementById('slider-section').hidden = false;
+  document.getElementById('games-section').hidden = false;
+  document.getElementById('products-section').hidden = true;
+  document.getElementById('pulsa-section').hidden = true;
+
+  // Tampilkan kembali kategori dan garis separator
+  const categoryMenu = document.getElementById('category-menu');
+  if (categoryMenu) categoryMenu.style.display = 'flex';
+
+  const separators = document.querySelectorAll('.menu-separator');
+  separators.forEach(el => el.style.display = 'block');
+}
+</script>
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
